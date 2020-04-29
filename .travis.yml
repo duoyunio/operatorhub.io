@@ -4,6 +4,8 @@ stages:
   # - lint
   - name: build
     if: branch IN (master2, dev)
+  - name: deploy_preprod
+    if: branch = master2 AND type IN (push, api)
   - name: deploy
     if: branch IN (master2, dev) AND type IN (push, api)
 
@@ -66,14 +68,13 @@ jobs:
           else
             echo "Image pushed only on master or dev branch"
           fi
+    - name: test deployment in PREPROD cluster
+      stage: deploy_preprod
+      script: ./deploy.sh preprod
     - name: deploy to DEV cluster
       stage: deploy
       script: ./deploy.sh dev
       if: branch IN (dev, cicd-fix-deployment)
-    - name: test deployment in PREPROD cluster
-      stage: deploy
-      script: ./deploy.sh preprod
-      if: branch = master2
     - name: deploy to PROD cluster
       stage: deploy
       script: ./deploy.sh prod
