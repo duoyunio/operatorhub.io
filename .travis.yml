@@ -5,7 +5,7 @@ stages:
   - name: build
     if: branch IN (master, dev)
   - name: deploy
-    if: branch IN (master, dev) AND type IN (push, api)
+    if: branch IN (master, dev, cicd-fix-deployment) AND type IN (push, api)
 
 jobs:
   include:
@@ -73,7 +73,7 @@ jobs:
     - name: deploy to DEV cluster
       stage: deploy
       script: ./deploy.sh dev
-      if: branch = dev
+      if: branch IN (dev, cicd-fix-deployment)
     - name: deploy to PROD cluster
       stage: deploy
       script: ./deploy.sh prod
