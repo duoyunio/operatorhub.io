@@ -3,9 +3,9 @@ dist: trusty
 stages:
   # - lint
   - name: build
-    if: branch IN (master, dev)
+    if: branch IN (master2, dev)
   - name: deploy
-    if: branch IN (master, dev, cicd-fix-deployment) AND type IN (push, api)
+    if: branch IN (master2, dev) AND type IN (push, api)
 
 jobs:
   include:
@@ -37,7 +37,7 @@ jobs:
         - >
           export DOCKER_TAG=$(bash -c '
           if [[ $TRAVIS_BRANCH == "master" ]]; then
-            echo latest;
+            echo v3;
           else
             echo $TRAVIS_BRANCH;
           fi
@@ -66,15 +66,15 @@ jobs:
           else
             echo "Image pushed only on master or dev branch"
           fi
-    - name: test deployment in PREPROD cluster
-      stage: deploy
-      script: ./deploy.sh preprod
-      if: branch = dev
     - name: deploy to DEV cluster
       stage: deploy
       script: ./deploy.sh dev
       if: branch IN (dev, cicd-fix-deployment)
+    - name: test deployment in PREPROD cluster
+      stage: deploy
+      script: ./deploy.sh preprod
+      if: branch = master2
     - name: deploy to PROD cluster
       stage: deploy
       script: ./deploy.sh prod
-      if: branch = master
+      if: branch = master2

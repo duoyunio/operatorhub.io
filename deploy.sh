@@ -29,7 +29,7 @@ if [[ "$ENVIRO" == "preprod" ]]; then
 fi
 
 ./bin/oc login --token="$OPENSHIFT_TOKEN" --server="$OPENSHIFT_SERVER" > /dev/null
-./bin/kustomize build k8s/dev | sed "s/DEPLOYMENT_RUN_ID/$(uuidgen)/" > manifest.yaml
+./bin/kustomize build k8s/$ENVIRO | sed "s/DEPLOYMENT_RUN_ID/$(uuidgen)/" > manifest.yaml
 cat manifest.yaml
 cat manifest.yaml | ./bin/oc apply -f -
 ./bin/oc rollout status -w deploy/operatorhubio
