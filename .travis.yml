@@ -36,7 +36,7 @@ jobs:
       script:
         - >
           export DOCKER_TAG=$(bash -c '
-          if [[ $TRAVIS_BRANCH == "master" ]]; then
+          if [[ $TRAVIS_BRANCH == "master2" ]]; then
             echo v3;
           else
             echo $TRAVIS_BRANCH;
@@ -44,7 +44,7 @@ jobs:
           ')
         - docker build -t "$DOCKER_REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG" -f travis.Dockerfile .
         - >
-          if [[ $TRAVIS_BRANCH == "master" ]] || [[ $TRAVIS_BRANCH == "dev" ]]; then
+          if [[ $TRAVIS_BRANCH == "master2" ]] || [[ $TRAVIS_BRANCH == "dev" ]]; then
             docker push "$DOCKER_REGISTRY/$DOCKER_IMAGE:$DOCKER_TAG"
           else
             echo "Image pushed only on master or dev branch"
