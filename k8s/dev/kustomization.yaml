@@ -5,8 +5,8 @@ commonLabels:
   app: operatorhubio
 bases:
   - ../base
-resources:
-  - route.yaml
+# resources:
+# - route.yaml
 images:
   - name: site
     newName: quay.io/operator-framework/operatorhubio
