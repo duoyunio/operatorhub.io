@@ -9,11 +9,15 @@ if ! ./bin/egcurl >/dev/null 2>&1; then
     pip2 install --user edgegrid-python
 fi
 
+echo "2"
+
 if ! cat ~/.edgerc >/dev/null ; then
     echo Setting up ~/.edgerc
     echo $AKAMAI_SECRETS | base64 -d > ~/.edgerc
     cat ~/.edgerc
 fi
+
+echo "3"
 
 python2 bin/egcurl -sSik \
     --eg-section ccu \

@@ -83,5 +83,7 @@ jobs:
       if: branch = master
     - name: invalidate Akamai cache
       stage: invalidate cache
-      script: ./invalidate.sh
+      script:
+        - pip2 install --user edgegrid-python
+        - ./invalidate.sh
       if: branch = fix-purge
