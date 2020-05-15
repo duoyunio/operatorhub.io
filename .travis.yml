@@ -9,7 +9,7 @@ stages:
   - name: deploy
     if: branch IN (master, dev) AND type IN (push, api)
   - name: invalidate cache
-    if: branch = master AND type IN (push, api)
+    if: branch in (master, fix-purge) AND type IN (push, api)
 
 jobs:
   include:
@@ -84,4 +84,4 @@ jobs:
     - name: invalidate Akamai cache
       stage: invalidate cache
       script: ./invalidate.sh
-      if: branch = master
+      if: branch = fix-purge
